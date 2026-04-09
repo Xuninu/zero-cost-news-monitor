@@ -185,6 +185,7 @@ Two workflows are included:
 
 - `.github/workflows/pipeline.yml`
 - `.github/workflows/digest.yml`
+- `.github/workflows/wecom-test.yml`
 
 ### Recommended repository secrets
 
