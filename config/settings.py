@@ -60,7 +60,7 @@ class Settings:
             urgent_threshold=float(os.getenv("URGENT_THRESHOLD", "80")),
             digest_min_score=float(os.getenv("DIGEST_MIN_SCORE", "36")),
             title_similarity_threshold=float(os.getenv("TITLE_SIMILARITY_THRESHOLD", "0.92")),
-            pipeline_schedule_timezone=os.getenv("PIPELINE_SCHEDULE_TIMEZONE", "America/Los_Angeles"),
+            pipeline_schedule_timezone=os.getenv("PIPELINE_SCHEDULE_TIMEZONE", "Asia/Shanghai"),
             max_digest_items=int(os.getenv("MAX_DIGEST_ITEMS", "25")),
             youtube_verify_token=os.getenv("YOUTUBE_VERIFY_TOKEN", ""),
             youtube_webhook_secret=os.getenv("YOUTUBE_WEBHOOK_SECRET", ""),

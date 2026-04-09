@@ -24,6 +24,6 @@ def is_scheduled_run_due(now: datetime | None = None, timezone_name: str | None 
 def schedule_description() -> str:
     """Human-readable description of the production schedule."""
     return (
-        "Every 30 minutes from 05:00 to 14:30 America/Los_Angeles, "
+        "Every 30 minutes from 05:00 to 14:30 Asia/Shanghai, "
         "then every 2 hours at 15:00, 17:00, 19:00, 21:00, 23:00, 01:00, 03:00."
     )

@@ -123,7 +123,7 @@ Important variables:
 
 - `WECOM_WEBHOOK_URL`: required for push delivery
 - `NEWS_DB_PATH`: SQLite database path, defaults to `data/news_monitor.db`
-- `PIPELINE_SCHEDULE_TIMEZONE`: defaults to `America/Los_Angeles`
+- `PIPELINE_SCHEDULE_TIMEZONE`: defaults to `Asia/Shanghai`
 - `URGENT_THRESHOLD`: immediate alert threshold
 - `DIGEST_MIN_SCORE`: scheduled digest minimum score threshold
 - `TITLE_SIMILARITY_THRESHOLD`: title-based dedup threshold
@@ -174,8 +174,8 @@ pytest
 
 The business schedule is implemented in code with timezone-aware gating:
 
-- Every 30 minutes from `05:00` to `14:30` in `America/Los_Angeles`
-- Every 2 hours at `15:00`, `17:00`, `19:00`, `21:00`, `23:00`, `01:00`, `03:00` in `America/Los_Angeles`
+- Every 30 minutes from `05:00` to `14:30` in `Asia/Shanghai`
+- Every 2 hours at `15:00`, `17:00`, `19:00`, `21:00`, `23:00`, `01:00`, `03:00` in `Asia/Shanghai`
 
 This is important because GitHub Actions cron is UTC-only and does not natively support named time zones.
 
@@ -196,7 +196,7 @@ Two workflows are included:
 
 ### How scheduling works in GitHub Actions
 
-`pipeline.yml` runs every 30 minutes in UTC and then lets Python decide whether the current time matches the `America/Los_Angeles` business schedule.
+`pipeline.yml` runs every 30 minutes in UTC and then lets Python decide whether the current time matches the `Asia/Shanghai` business schedule.
 
 `digest.yml` also runs every 30 minutes in UTC and uses the same Python timezone gate. This avoids hard-coding daylight saving offsets into cron.
 
