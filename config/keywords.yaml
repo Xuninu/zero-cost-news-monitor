@@ -1,0 +1,180 @@
+scoring:
+  urgent_threshold: 84
+  official_source_boost: 12
+  duplicate_penalty_per_match: 6
+  max_duplicate_penalty: 18
+  default_source_weight: 3
+  source_weights:
+    youtube: 4
+    rss: 4
+    site: 3
+    eastmoney: 5
+    x: 0
+  source_name_weights:
+    OpenAI: 10
+    Anthropic: 8
+    Google DeepMind: 8
+    NVIDIA Developer: 7
+    Bloomberg Technology: 5
+    OpenAI News: 10
+    Google AI Blog: 7
+    Microsoft AI Blog: 6
+    TechCrunch AI: 5
+    Ars Technica Technology Lab: 4
+    Eastmoney Market Commentary: 7
+    Eastmoney Company News: 8
+  recency_boosts:
+    - max_hours: 1
+      boost: 14
+    - max_hours: 3
+      boost: 10
+    - max_hours: 8
+      boost: 6
+    - max_hours: 24
+      boost: 3
+  keyword_groups:
+    - label: Frontier AI model release
+      weight: 20
+      tags: [international-ai, model-release]
+      terms:
+        - gpt-5
+        - gpt
+        - claude
+        - gemini
+        - llama
+        - deepseek
+        - model release
+        - new model
+        - reasoning model
+        - agent
+        - ai agent
+        - 大模型
+        - 模型发布
+        - 新模型
+        - 推理模型
+        - 智能体
+        - agentic
+    - label: AI chips and infrastructure
+      weight: 16
+      tags: [international-ai, semiconductors, ai-infrastructure]
+      terms:
+        - gpu
+        - accelerator
+        - hbm
+        - blackwell
+        - cuda
+        - datacenter
+        - data center
+        - inference
+        - training cluster
+        - capex
+        - ai server
+        - optical module
+        - 芯片
+        - 算力
+        - 数据中心
+        - 推理
+        - 训练集群
+        - 光模块
+        - 液冷
+        - 服务器
+    - label: Global technology platform
+      weight: 10
+      tags: [global-technology]
+      terms:
+        - cloud
+        - smartphone
+        - operating system
+        - browser
+        - search
+        - ads
+        - subscription
+        - ecommerce
+        - robotaxi
+        - robotics
+        - 云计算
+        - 智能手机
+        - 操作系统
+        - 搜索
+        - 广告
+        - 机器人
+        - 自动驾驶
+    - label: A-shares market signal
+      weight: 18
+      tags: [a-shares, china-markets]
+      terms:
+        - a-share
+        - a shares
+        - 沪深
+        - 上交所
+        - 深交所
+        - 科创板
+        - 创业板
+        - 龙虎榜
+        - 机构调研
+        - 业绩预告
+        - 业绩快报
+        - 年报
+        - 季报
+        - 回购
+        - 增持
+        - 减持
+        - 涨停
+        - 跌停
+    - label: Regulation and policy
+      weight: 14
+      tags: [policy, regulation]
+      terms:
+        - regulation
+        - regulator
+        - antitrust
+        - export control
+        - subsidy
+        - approval
+        - sanction
+        - 监管
+        - 政策
+        - 审批
+        - 制裁
+        - 出口管制
+        - 补贴
+        - 牌照
+  urgency_keywords:
+    - label: Breaking or official confirmation
+      boost: 22
+      terms:
+        - breaking
+        - urgent
+        - just in
+        - exclusive
+        - confirms
+        - 突发
+        - 快讯
+        - 速递
+        - 紧急
+        - 官宣
+    - label: Earnings and guidance
+      boost: 18
+      terms:
+        - guidance
+        - earnings
+        - revenue
+        - profit warning
+        - 财报
+        - 业绩
+        - 指引
+        - 预增
+        - 预亏
+        - 盈利预警
+    - label: Regulation and approval
+      boost: 16
+      terms:
+        - approval
+        - regulator
+        - regulation
+        - sanction
+        - ban
+        - 批准
+        - 监管
+        - 处罚
+        - 禁令

@@ -1,0 +1,136 @@
+youtube:
+  polling_enabled: true
+  channels:
+    - id: UCXZCJLdBC09xxGZ6gcdrc6A
+      name: OpenAI
+      enabled: true
+      max_entries: 12
+      official: true
+      tags: [international-ai, official, frontier-models]
+    - id: UCLXo7UDZvByw2ixzpQCufnA
+      name: Anthropic
+      enabled: true
+      max_entries: 12
+      official: true
+      tags: [international-ai, official, frontier-models]
+    - id: UCP7jMXSY2xbc3KCAE0MHQ-A
+      name: Google DeepMind
+      enabled: true
+      max_entries: 12
+      official: true
+      tags: [international-ai, official, frontier-models]
+    - id: UCBHcMCGaiJhv-ESTcWGJPcw
+      name: NVIDIA Developer
+      enabled: true
+      max_entries: 12
+      official: true
+      tags: [international-ai, global-technology, semiconductors, official]
+    - id: UCrM7B7SL_g1edFOnmj-SDKg
+      name: Bloomberg Technology
+      enabled: true
+      max_entries: 12
+      official: false
+      tags: [global-technology, markets]
+    - id: UCBJycsmduvYEL83R_U4JriQ
+      name: Marques Brownlee
+      enabled: false
+      official: false
+      tags: [global-technology, consumer-tech]
+
+eastmoney:
+  pages:
+    - name: Eastmoney Market Commentary
+      enabled: true
+      url: https://finance.eastmoney.com/a/cgspl.html
+      adapter: eastmoney_np_list_api
+      official: false
+      tags: [a-shares, china-markets, market-commentary]
+      api:
+        kind: column
+        column: "374"
+        type: "1"
+        page_size: 20
+        order: 1
+    - name: Eastmoney Company News
+      enabled: true
+      url: https://finance.eastmoney.com/a/ccjdd.html
+      adapter: eastmoney_np_list_api
+      official: false
+      tags: [a-shares, company-news, earnings]
+      api:
+        kind: column
+        column: "344"
+        type: "1"
+        page_size: 20
+        order: 1
+
+rss:
+  feeds:
+    - name: OpenAI News
+      enabled: true
+      max_entries: 20
+      url: https://openai.com/news/rss.xml
+      official: true
+      tags: [international-ai, official, frontier-models]
+    - name: Google AI Blog
+      enabled: true
+      max_entries: 20
+      url: https://blog.google/technology/ai/rss/
+      official: true
+      tags: [international-ai, official]
+    - name: Microsoft AI Blog
+      enabled: true
+      max_entries: 20
+      url: https://blogs.microsoft.com/ai/feed/
+      official: true
+      tags: [international-ai, global-technology, official]
+    - name: TechCrunch AI
+      enabled: true
+      max_entries: 20
+      url: https://techcrunch.com/category/artificial-intelligence/feed/
+      official: false
+      tags: [international-ai, global-technology]
+    - name: Ars Technica Technology Lab
+      enabled: true
+      max_entries: 20
+      url: https://feeds.arstechnica.com/arstechnica/technology-lab
+      official: false
+      tags: [global-technology]
+    - name: TechCrunch General
+      enabled: false
+      url: https://techcrunch.com/feed/
+      official: false
+      tags: [global-technology]
+
+sites:
+  pages:
+    - name: SEC Press Releases
+      enabled: false
+      url: https://www.sec.gov/news/pressreleases
+      adapter: generic_article_cards
+      official: true
+      tags: [global-technology, official, regulation]
+      selectors:
+        item: article, li
+        title: a
+        url: a
+        time: time
+        summary: p
+      base_url: https://www.sec.gov
+    - name: Nasdaq AI News
+      enabled: false
+      url: https://www.nasdaq.com/topic/artificial-intelligence
+      adapter: generic_article_cards
+      official: false
+      tags: [international-ai, global-technology]
+      selectors:
+        item: article
+        title: a
+        url: a
+        time: time
+        summary: p
+      base_url: https://www.nasdaq.com
+
+x:
+  enabled: false
+  notes: Placeholder only for future production integration.

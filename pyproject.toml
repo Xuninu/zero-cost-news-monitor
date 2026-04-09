@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zero-cost-news-monitor"
+version = "0.1.0"
+description = "Zero-cost news monitoring pipeline for YouTube, Eastmoney, RSS, and public sites."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "OpenAI Codex" }
+]
+dependencies = [
+  "beautifulsoup4>=4.12.3",
+  "fastapi>=0.115.0",
+  "feedparser>=6.0.11",
+  "httpx>=0.28.0",
+  "pydantic>=2.9.0",
+  "python-dateutil>=2.9.0",
+  "python-dotenv>=1.0.1",
+  "pyyaml>=6.0.2",
+  "requests>=2.32.3",
+  "uvicorn>=0.32.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.3",
+]
+
+[project.scripts]
+news-monitor-api = "api.server:main"
+news-monitor-pipeline = "jobs.run_pipeline:main"
+news-monitor-digest = "jobs.send_digest:main"
+news-monitor-test-wecom = "scripts.test_wecom:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["api*", "config*", "dedup*", "digest*", "ingest*", "jobs*", "normalize*", "notify*", "score*", "scripts*", "storage*", "tests*"]

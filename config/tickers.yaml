@@ -1,0 +1,97 @@
+tickers:
+  - symbol: NVDA
+    weight: 10
+    aliases: [nvidia, nvda, 英伟达, blackwell, h100, h200, b200]
+    tags: [international-ai, semiconductors]
+  - symbol: AMD
+    weight: 8
+    aliases: [amd, mi300, mi350, 超威, instinct]
+    tags: [international-ai, semiconductors]
+  - symbol: AVGO
+    weight: 8
+    aliases: [broadcom, avgo, 博通]
+    tags: [global-technology, semiconductors]
+  - symbol: TSM
+    weight: 8
+    aliases: [tsmc, tsm, 台积电]
+    tags: [global-technology, semiconductors]
+  - symbol: ASML
+    weight: 7
+    aliases: [asml, 阿斯麦]
+    tags: [global-technology, semiconductors]
+  - symbol: ARM
+    weight: 7
+    aliases: [arm, arm holdings]
+    tags: [global-technology, semiconductors]
+  - symbol: QCOM
+    weight: 7
+    aliases: [qualcomm, qcom, 高通, snapdragon]
+    tags: [global-technology, semiconductors]
+  - symbol: MSFT
+    weight: 9
+    aliases: [microsoft, msft, 微软, azure, copilot]
+    tags: [international-ai, global-technology]
+  - symbol: GOOGL
+    weight: 9
+    aliases: [google, alphabet, googl, 谷歌, gemini]
+    tags: [international-ai, global-technology]
+  - symbol: META
+    weight: 8
+    aliases: [meta, meta ai, facebook, instagram, 雷朋, 扎克伯格]
+    tags: [international-ai, global-technology]
+  - symbol: AMZN
+    weight: 8
+    aliases: [amazon, amzn, aws, 亚马逊]
+    tags: [international-ai, global-technology]
+  - symbol: AAPL
+    weight: 8
+    aliases: [apple, aapl, 苹果, iphone, ios]
+    tags: [global-technology]
+  - symbol: TSLA
+    weight: 7
+    aliases: [tesla, tsla, 特斯拉, robotaxi, optimus]
+    tags: [global-technology]
+  - symbol: 688256.SH
+    weight: 10
+    aliases: [寒武纪, cambricon]
+    tags: [a-shares, ai-chip]
+  - symbol: 688041.SH
+    weight: 10
+    aliases: [海光信息, haiguang]
+    tags: [a-shares, ai-chip]
+  - symbol: 688981.SH
+    weight: 9
+    aliases: [中芯国际, smic]
+    tags: [a-shares, semiconductors]
+  - symbol: 300308.SZ
+    weight: 8
+    aliases: [中际旭创, zhongji innolight]
+    tags: [a-shares, ai-infrastructure]
+  - symbol: 300502.SZ
+    weight: 8
+    aliases: [新易盛, eoptolink]
+    tags: [a-shares, ai-infrastructure]
+  - symbol: 000977.SZ
+    weight: 8
+    aliases: [浪潮信息, inspur]
+    tags: [a-shares, ai-infrastructure]
+  - symbol: 601138.SH
+    weight: 8
+    aliases: [工业富联, foxconn industrial internet, fii]
+    tags: [a-shares, ai-infrastructure]
+  - symbol: 603019.SH
+    weight: 8
+    aliases: [中科曙光, sugon]
+    tags: [a-shares, ai-infrastructure]
+  - symbol: 002230.SZ
+    weight: 8
+    aliases: [科大讯飞, iflytek]
+    tags: [a-shares, ai-application]
+  - symbol: 688008.SH
+    weight: 7
+    aliases: [澜起科技, montage]
+    tags: [a-shares, semiconductors]
+  - symbol: 300394.SZ
+    weight: 7
+    aliases: [天孚通信, tfc]
+    tags: [a-shares, ai-infrastructure]
