@@ -126,6 +126,7 @@ def run_pipeline(
     force: bool = False,
     only_sources: list[str] | None = None,
     scheduled: bool = False,
+    bootstrap: bool = False,
 ) -> dict[str, Any]:
     """Run the end-to-end collection and scoring pipeline."""
     started_at = datetime.now(UTC)
@@ -146,12 +147,20 @@ def run_pipeline(
             sources_config=sources_config,
             only_sources=source_filter or None,
         )
-        processing_stats = process_raw_items(raw_items, db=db)
+        processing_stats = process_raw_items(raw_items, db=db, send_urgent=not bootstrap)
+        bootstrap_marked_sent = 0
+        if bootstrap:
+            pending_items = db.fetch_pending_digest_items(limit=10_000, min_score=0.0)
+            for item in pending_items:
+                db.mark_sent(item.id, "bootstrap")
+            bootstrap_marked_sent = len(pending_items)
         stats = {
             "scheduled": scheduled,
             "forced": force,
+            "bootstrap": bootstrap,
             "collector_counts": collector_counts,
             "collector_errors": collector_errors,
+            "bootstrap_marked_sent": bootstrap_marked_sent,
             **processing_stats,
         }
         if collector_errors or processing_stats["errors"]:
@@ -191,9 +200,19 @@ def main() -> None:
         nargs="*",
         help="Optional source families to run, for example: youtube rss eastmoney.",
     )
+    parser.add_argument(
+        "--bootstrap",
+        action="store_true",
+        help="Collect and store items, but suppress urgent pushes and mark them as already sent.",
+    )
     args = parser.parse_args()
 
-    stats = run_pipeline(force=args.force, only_sources=args.sources, scheduled=args.scheduled)
+    stats = run_pipeline(
+        force=args.force,
+        only_sources=args.sources,
+        scheduled=args.scheduled,
+        bootstrap=args.bootstrap,
+    )
     LOGGER.info("Pipeline finished with stats: %s", stats)
 
 

@@ -199,6 +199,19 @@ Two workflows are included:
 
 `digest.yml` also runs every 30 minutes in UTC and uses the same Python timezone gate. This avoids hard-coding daylight saving offsets into cron.
 
+### First GitHub bootstrap
+
+For the very first manual GitHub run, use the `Pipeline` workflow with `bootstrap=true`.
+
+That mode will:
+
+- collect and score items
+- store them in SQLite cache
+- suppress urgent pushes
+- mark the collected baseline as already sent
+
+After that, scheduled runs can continue normally without replaying the initial backlog into WeCom.
+
 ### SQLite state in GitHub Actions
 
 GitHub-hosted runners are ephemeral, so the workflows restore and save `data/news_monitor.db` through the GitHub cache action. This is a practical zero-cost v1 approach, but it is still best-effort persistence rather than durable database hosting.

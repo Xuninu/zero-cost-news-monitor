@@ -2,6 +2,12 @@ name: Pipeline
 
 on:
   workflow_dispatch:
+    inputs:
+      bootstrap:
+        description: "Bootstrap the cache/database without sending urgent alerts"
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: "*/30 * * * *"
 
@@ -53,7 +59,15 @@ jobs:
           pip install -e .[dev]
 
       - name: Run pipeline with schedule gating
-        run: python -m jobs.run_pipeline --scheduled
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.bootstrap }}" == "true" ]]; then
+            python -m jobs.run_pipeline --force --bootstrap
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            python -m jobs.run_pipeline --force
+          else
+            python -m jobs.run_pipeline --scheduled
+          fi
 
       - name: Save SQLite cache
         if: always()

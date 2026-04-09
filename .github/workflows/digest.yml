@@ -50,7 +50,13 @@ jobs:
           pip install -e .[dev]
 
       - name: Send digest with schedule gating
-        run: python -m jobs.send_digest --scheduled
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            python -m jobs.send_digest --force
+          else
+            python -m jobs.send_digest --scheduled
+          fi
 
       - name: Save SQLite cache
         if: always()
