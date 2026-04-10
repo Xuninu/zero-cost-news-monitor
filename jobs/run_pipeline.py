@@ -1,4 +1,4 @@
-"""Collect, normalize, score, store, and optionally alert on new items."""
+﻿"""Collect, normalize, score, store, and optionally alert on new items."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ from typing import Any
 from config.settings import get_settings, load_yaml_config, setup_logging
 from dedup.dedup import DuplicateCandidate, evaluate_duplicate
 from digest.builder import build_urgent_message
+from digest.filtering import DEFAULT_DELIVERY_MAX_AGE_HOURS, is_item_within_age
 from ingest.eastmoney_ingest import fetch_eastmoney_items
 from ingest.rss_ingest import fetch_rss_items
 from ingest.site_ingest import fetch_site_items
@@ -76,6 +77,7 @@ def process_raw_items(
         "duplicate_title": 0,
         "stored_items": 0,
         "urgent_sent": 0,
+        "stale_urgent_skipped": 0,
         "errors": [],
     }
 
@@ -108,6 +110,9 @@ def process_raw_items(
             stats["stored_items"] += 1
 
             if send_urgent and item.is_urgent and not db.has_been_sent(item.id):
+                if not is_item_within_age(item, max_age_hours=DEFAULT_DELIVERY_MAX_AGE_HOURS):
+                    stats["stale_urgent_skipped"] += 1
+                    continue
                 if notifier.webhook_url:
                     use_markdown = notifier.message_format != "text"
                     notifier.send_message(build_urgent_message(item, use_markdown=use_markdown))
