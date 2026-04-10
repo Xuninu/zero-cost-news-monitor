@@ -198,7 +198,14 @@ Two workflows are included:
 
 `pipeline.yml` runs every 30 minutes in UTC and then lets Python decide whether the current time matches the `Asia/Shanghai` business schedule.
 
-`digest.yml` also runs every 30 minutes in UTC and uses the same Python timezone gate. This avoids hard-coding daylight saving offsets into cron.
+During a scheduled run, `pipeline.yml` now does both steps in one job:
+
+- collect and score new items
+- send the digest from the same SQLite state
+
+This avoids cache races between separate scheduled workflows that would otherwise restore and save different copies of the SQLite file.
+
+`digest.yml` is kept as a manual workflow for troubleshooting or on-demand sending.
 
 ### First GitHub bootstrap
 

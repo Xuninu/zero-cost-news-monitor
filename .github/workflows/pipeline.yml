@@ -69,6 +69,11 @@ jobs:
             python -m jobs.run_pipeline --scheduled
           fi
 
+      - name: Send digest using the same SQLite state
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        shell: bash
+        run: python -m jobs.send_digest --scheduled
+
       - name: Save SQLite cache
         if: always()
         uses: actions/cache/save@v4
