@@ -56,7 +56,7 @@ class Settings:
             log_level=os.getenv("LOG_LEVEL", "INFO"),
             request_timeout_seconds=int(os.getenv("REQUEST_TIMEOUT_SECONDS", "20")),
             wecom_webhook_url=os.getenv("WECOM_WEBHOOK_URL", ""),
-            wecom_message_format=os.getenv("WECOM_MESSAGE_FORMAT", "markdown").lower(),
+            wecom_message_format=os.getenv("WECOM_MESSAGE_FORMAT", "text").lower(),
             urgent_threshold=float(os.getenv("URGENT_THRESHOLD", "80")),
             digest_min_score=float(os.getenv("DIGEST_MIN_SCORE", "36")),
             title_similarity_threshold=float(os.getenv("TITLE_SIMILARITY_THRESHOLD", "0.92")),

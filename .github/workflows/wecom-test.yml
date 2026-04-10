@@ -18,7 +18,7 @@ jobs:
     env:
       WECOM_WEBHOOK_URL: ${{ secrets.WECOM_WEBHOOK_URL }}
       REQUEST_TIMEOUT_SECONDS: 20
-      WECOM_MESSAGE_FORMAT: markdown
+      WECOM_MESSAGE_FORMAT: text
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

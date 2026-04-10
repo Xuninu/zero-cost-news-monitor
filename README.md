@@ -235,10 +235,12 @@ GitHub-hosted runners are ephemeral, so the workflows restore and save `data/new
 
 Supported formats:
 
-- `markdown`
 - `text`
+- `markdown`
 
-Long digests are chunked into multiple messages before sending.
+For cleaner reading in WeCom groups, the default runtime format is `text`.
+
+Long digests are chunked into multiple messages before sending, and entries are separated by blank lines.
 
 ## How To Add Sources
 

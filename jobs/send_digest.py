@@ -43,7 +43,7 @@ def send_digest(force: bool = False, scheduled: bool = False) -> dict[str, objec
 
         use_markdown = notifier.message_format != "text"
         entries = build_digest_entries(items)
-        title = f"News Digest ({len(entries)} items)"
+        title = f"重要新闻摘要（{len(entries)}条）"
         messages = render_digest_messages(entries, title=title, use_markdown=use_markdown)
         notifier.send_messages(messages)
 
