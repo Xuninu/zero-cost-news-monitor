@@ -95,3 +95,127 @@ tickers:
     weight: 7
     aliases: [天孚通信, tfc]
     tags: [a-shares, ai-infrastructure]
+  - symbol: XOM
+    weight: 8
+    aliases: [exxon, exxon mobil, xom, 埃克森美孚]
+    tags: [energy, oil, commodities]
+  - symbol: CVX
+    weight: 8
+    aliases: [chevron, cvx, 雪佛龙]
+    tags: [energy, oil, commodities]
+  - symbol: SLB
+    weight: 7
+    aliases: [slb, schlumberger, 斯伦贝谢]
+    tags: [energy, oil]
+  - symbol: 601857.SH
+    weight: 8
+    aliases: [中国石油, petrochina]
+    tags: [energy, oil, a-shares]
+  - symbol: 600028.SH
+    weight: 8
+    aliases: [中国石化, sinopec]
+    tags: [energy, oil, a-shares]
+  - symbol: 600938.SH
+    weight: 8
+    aliases: [中国海油, cnooc]
+    tags: [energy, oil, a-shares]
+  - symbol: "00883.HK"
+    weight: 8
+    aliases: [中国海油, cnooc]
+    tags: [energy, oil]
+  - symbol: ZIM
+    weight: 8
+    aliases: [zim, zim integrated shipping]
+    tags: [shipping, commodities]
+  - symbol: MATX
+    weight: 7
+    aliases: [matson, matx]
+    tags: [shipping]
+  - symbol: 601919.SH
+    weight: 8
+    aliases: [中远海控, cosco shipping holdings]
+    tags: [shipping, a-shares]
+  - symbol: 600026.SH
+    weight: 8
+    aliases: [中远海能, cosco shipping energy]
+    tags: [shipping, energy, a-shares]
+  - symbol: 601872.SH
+    weight: 7
+    aliases: [招商轮船, china merchants energy shipping]
+    tags: [shipping, energy, a-shares]
+  - symbol: GOLD
+    weight: 7
+    aliases: [barrick, barrick gold, gold]
+    tags: [gold, commodities, safe-haven]
+  - symbol: NEM
+    weight: 7
+    aliases: [newmont, nem]
+    tags: [gold, commodities, safe-haven]
+  - symbol: 601899.SH
+    weight: 8
+    aliases: [紫金矿业, zijin]
+    tags: [gold, commodities, a-shares]
+  - symbol: 600547.SH
+    weight: 8
+    aliases: [山东黄金, shandong gold]
+    tags: [gold, commodities, a-shares]
+  - symbol: 600489.SH
+    weight: 7
+    aliases: [中金黄金, zhongjin gold]
+    tags: [gold, commodities, a-shares]
+  - symbol: LMT
+    weight: 7
+    aliases: [lockheed martin, lmt]
+    tags: [defense]
+  - symbol: RTX
+    weight: 7
+    aliases: [rtx, raytheon]
+    tags: [defense]
+  - symbol: NOC
+    weight: 7
+    aliases: [northrop grumman, noc]
+    tags: [defense]
+  - symbol: 600760.SH
+    weight: 8
+    aliases: [中航沈飞, avic shenyang]
+    tags: [defense, a-shares]
+  - symbol: 000768.SZ
+    weight: 8
+    aliases: [中航西飞, avic xac]
+    tags: [defense, a-shares]
+  - symbol: 600893.SH
+    weight: 8
+    aliases: [航发动力, aecc aviation power]
+    tags: [defense, aerospace, a-shares]
+  - symbol: RKLB
+    weight: 8
+    aliases: [rocket lab, rklb]
+    tags: [space-economy, aerospace, ipo]
+  - symbol: ASTS
+    weight: 7
+    aliases: [ast spacemobile, asts]
+    tags: [space-economy, aerospace]
+  - symbol: IRDM
+    weight: 7
+    aliases: [iridium, irdm]
+    tags: [space-economy, aerospace]
+  - symbol: 600118.SH
+    weight: 8
+    aliases: [中国卫星, china satellite]
+    tags: [space-economy, aerospace, a-shares]
+  - symbol: SPY
+    weight: 6
+    aliases: [spy, s&p 500, standard and poor 500]
+    tags: [macro, global-markets, market-moving]
+  - symbol: QQQ
+    weight: 6
+    aliases: [qqq, nasdaq 100]
+    tags: [macro, global-markets, market-moving]
+  - symbol: 601888.SH
+    weight: 7
+    aliases: [中国中免, china tourism group duty free]
+    tags: [consumer-hotspot, tourism-consumption, a-shares]
+  - symbol: 300144.SZ
+    weight: 6
+    aliases: [宋城演艺, songcheng]
+    tags: [consumer-hotspot, tourism-consumption, entertainment, a-shares]

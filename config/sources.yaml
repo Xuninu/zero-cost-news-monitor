@@ -96,6 +96,48 @@ rss:
       url: https://feeds.arstechnica.com/arstechnica/technology-lab
       official: false
       tags: [global-technology]
+    - name: BBC World
+      enabled: true
+      max_entries: 20
+      url: http://feeds.bbci.co.uk/news/world/rss.xml
+      official: false
+      tags: [geopolitics, global-markets, market-moving]
+    - name: BBC Business
+      enabled: true
+      max_entries: 20
+      url: http://feeds.bbci.co.uk/news/business/rss.xml
+      official: false
+      tags: [macro, global-markets, market-moving]
+    - name: Al Jazeera Global
+      enabled: true
+      max_entries: 20
+      url: https://www.aljazeera.com/xml/rss/all.xml
+      official: false
+      tags: [geopolitics, global-markets, energy]
+    - name: EIA Energy
+      enabled: true
+      max_entries: 20
+      url: https://www.eia.gov/rss/todayinenergy.xml
+      official: true
+      tags: [energy, oil, commodities, official]
+    - name: Google News Middle East Oil Shipping
+      enabled: true
+      max_entries: 20
+      url: https://news.google.com/rss/search?q=%28Middle+East+OR+Iran+OR+Israel+OR+Red+Sea+OR+Hormuz%29+%28oil+OR+shipping+OR+tanker+OR+crude%29&hl=en-US&gl=US&ceid=US:en
+      official: false
+      tags: [geopolitics, oil, shipping, energy, commodities, market-moving]
+    - name: Google News Trump Markets
+      enabled: true
+      max_entries: 20
+      url: https://news.google.com/rss/search?q=%28Trump+OR+Trump+tariff+OR+Trump+Powell+OR+Trump+Fed%29+market&hl=en-US&gl=US&ceid=US:en
+      official: false
+      tags: [us-politics, macro, global-markets, market-moving]
+    - name: Google News SpaceX IPO
+      enabled: true
+      max_entries: 20
+      url: https://news.google.com/rss/search?q=%28SpaceX+OR+Starlink%29+%28IPO+OR+valuation+OR+listing+OR+funding%29&hl=en-US&gl=US&ceid=US:en
+      official: false
+      tags: [space-economy, ipo, aerospace, global-technology]
     - name: TechCrunch General
       enabled: false
       url: https://techcrunch.com/feed/

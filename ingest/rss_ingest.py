@@ -11,6 +11,13 @@ from config.settings import get_settings
 from normalize.schema import utc_now
 
 
+def _entry_body(feed_name: str, entry: Any) -> str:
+    """Return the best body text for a feed entry, avoiding noisy aggregator summaries."""
+    if str(feed_name).startswith("Google News "):
+        return ""
+    return entry.get("summary", "") or entry.get("description", "")
+
+
 def fetch_rss_items(
     sources_config: dict[str, Any],
     client: httpx.Client | None = None,
@@ -44,7 +51,7 @@ def fetch_rss_items(
                         "source": feed["name"],
                         "source_type": "rss",
                         "title": entry.get("title", ""),
-                        "body": entry.get("summary", "") or entry.get("description", ""),
+                        "body": _entry_body(feed["name"], entry),
                         "url": entry.get("link", ""),
                         "author": entry.get("author", feed["name"]),
                         "published_at": entry.get("published", "") or entry.get("updated", ""),

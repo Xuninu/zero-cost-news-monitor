@@ -22,6 +22,13 @@ SOURCE_NAME_ZH = {
     "Microsoft AI Blog": "\u5fae\u8f6f\u0020\u0041\u0049\u535a\u5ba2",
     "TechCrunch AI": "\u0054\u0065\u0063\u0068\u0043\u0072\u0075\u006e\u0063\u0068\u0020\u0041\u0049",
     "Ars Technica Technology Lab": "\u0041\u0072\u0073\u6280\u672f\u680f\u76ee",
+    "BBC World": "\u0042\u0042\u0043\u4e16\u754c",
+    "BBC Business": "\u0042\u0042\u0043\u5546\u4e1a",
+    "Al Jazeera Global": "\u534a\u5c9b\u7535\u89c6\u53f0",
+    "EIA Energy": "\u7f8e\u56fd\u80fd\u6e90\u4fe1\u606f\u7f72",
+    "Google News Middle East Oil Shipping": "\u8c37\u6b4c\u65b0\u95fb\u4e2d\u4e1c\u6cb9\u8fd0",
+    "Google News Trump Markets": "\u8c37\u6b4c\u65b0\u95fb\u7279\u6717\u666e\u5e02\u573a",
+    "Google News SpaceX IPO": "\u8c37\u6b4c\u65b0\u95fb\u0053\u0070\u0061\u0063\u0065\u0058\u0020\u0049\u0050\u004f",
     "Eastmoney Market Commentary": "\u4e1c\u65b9\u8d22\u5bcc\u5e02\u573a\u8bc4\u8bba",
     "Eastmoney Company News": "\u4e1c\u65b9\u8d22\u5bcc\u516c\u53f8\u65b0\u95fb",
 }
@@ -45,9 +52,39 @@ TAG_NAME_ZH = {
     "regulation": "\u76d1\u7ba1",
     "markets": "\u5e02\u573a",
     "consumer-tech": "\u6d88\u8d39\u79d1\u6280",
+    "geopolitics": "\u5730\u7f18\u653f\u6cbb",
+    "global-markets": "\u5168\u7403\u5e02\u573a",
+    "market-moving": "\u5e02\u573a\u50ac\u5316",
+    "energy": "\u80fd\u6e90",
+    "oil": "\u539f\u6cb9",
+    "shipping": "\u822a\u8fd0",
+    "commodities": "\u5927\u5b97\u5546\u54c1",
+    "us-politics": "\u7f8e\u56fd\u653f\u6cbb",
+    "macro": "\u5b8f\u89c2",
+    "gold": "\u9ec4\u91d1",
+    "safe-haven": "\u907f\u9669",
+    "defense": "\u519b\u5de5",
+    "space-economy": "\u592a\u7a7a\u7ecf\u6d4e",
+    "ipo": "\u0049\u0050\u004f",
+    "aerospace": "\u822a\u5929\u822a\u7a7a",
+    "consumer-hotspot": "\u70ed\u70b9\u6d88\u8d39",
+    "tourism-consumption": "\u6587\u65c5\u6d88\u8d39",
+    "entertainment": "\u5a31\u4e50",
+    "sports-hotspot": "\u8d5b\u4e8b\u70ed\u70b9",
 }
 
 IMPACT_TAG_PRIORITY = [
+    "geopolitics",
+    "oil",
+    "shipping",
+    "energy",
+    "defense",
+    "gold",
+    "space-economy",
+    "ipo",
+    "macro",
+    "global-markets",
+    "market-moving",
     "ai-infrastructure",
     "ai-chip",
     "semiconductors",
@@ -56,9 +93,66 @@ IMPACT_TAG_PRIORITY = [
     "a-shares",
     "china-markets",
     "ai-application",
+    "consumer-hotspot",
+    "tourism-consumption",
+    "entertainment",
+    "sports-hotspot",
 ]
 
+GENERIC_IMPACT_TAGS = {
+    "a-shares",
+    "china-markets",
+    "global-markets",
+    "market-moving",
+    "official",
+    "company-news",
+    "market-commentary",
+    "earnings",
+    "policy",
+    "regulation",
+    "markets",
+}
+
 EVENT_PATTERNS = (
+    (
+        "\u5730\u7f18\u51b2\u7a81\u4e0e\u6cb9\u8fd0\u6270\u52a8",
+        (
+            "middle east",
+            "iran",
+            "israel",
+            "red sea",
+            "hormuz",
+            "crude",
+            "oil",
+            "tanker",
+            "shipping",
+            "\u4e2d\u4e1c",
+            "\u4f0a\u6717",
+            "\u4ee5\u8272\u5217",
+            "\u7ea2\u6d77",
+            "\u970d\u5c14\u6728\u5179",
+            "\u539f\u6cb9",
+            "\u6cb9\u8f6e",
+            "\u822a\u8fd0",
+            "\u6d77\u8fd0",
+        ),
+    ),
+    (
+        "\u7279\u6717\u666e\u4e0e\u5b8f\u89c2\u5e02\u573a\u50ac\u5316",
+        (
+            "trump",
+            "tariff",
+            "powell",
+            "fed",
+            "federal reserve",
+            "white house",
+            "\u7279\u6717\u666e",
+            "\u5173\u7a0e",
+            "\u9c8d\u5a01\u5c14",
+            "\u7f8e\u8054\u50a8",
+            "\u767d\u5bab",
+        ),
+    ),
     (
         "\u4e1a\u7ee9\u4e0e\u7ecf\u8425\u66f4\u65b0",
         (
@@ -143,6 +237,41 @@ EVENT_PATTERNS = (
             "autonomous",
             "\u81ea\u52a8\u9a7e\u9a76",
             "\u673a\u5668\u4eba",
+        ),
+    ),
+    (
+        "\u592a\u7a7a\u7ecf\u6d4e\u4e0e\u0049\u0050\u004f\u50ac\u5316",
+        (
+            "spacex",
+            "starlink",
+            "rocket",
+            "satellite",
+            "launch vehicle",
+            "orbital",
+            "\u592a\u7a7a",
+            "\u822a\u5929",
+            "\u536b\u661f",
+            "\u53d1\u5c04",
+        ),
+    ),
+    (
+        "\u70ed\u70b9\u4e8b\u4ef6\u4e0e\u677f\u5757\u50ac\u5316",
+        (
+            "championship",
+            "champion",
+            "concert",
+            "box office",
+            "tourism surge",
+            "sold out",
+            "esports",
+            "\u593a\u51a0",
+            "\u51a0\u519b",
+            "\u6f14\u5531\u4f1a",
+            "\u7968\u623f",
+            "\u6587\u65c5",
+            "\u65c5\u6e38\u70ed",
+            "\u8d5b\u4e8b",
+            "\u70ed\u95e8\u0049\u0050",
         ),
     ),
     (
@@ -461,18 +590,45 @@ def _impact_targets_zh(item: NewsItem) -> list[str]:
 
 def _candidate_symbols_text(item: NewsItem, limit: int = 4) -> str:
     symbols: list[str] = []
+    tag_set = {clean_text(tag).lower() for tag in item.tags}
+    specific_tags = {tag for tag in tag_set if tag not in GENERIC_IMPACT_TAGS}
+    ticker_by_symbol = {
+        clean_text(str(ticker.get("symbol", ""))): ticker
+        for ticker in _ticker_entries()
+        if clean_text(str(ticker.get("symbol", "")))
+    }
+
     for symbol in item.symbols:
         cleaned = clean_text(symbol)
         if cleaned and cleaned not in symbols:
+            ticker_meta = ticker_by_symbol.get(cleaned)
+            if ticker_meta:
+                ticker_tags = {clean_text(str(tag)).lower() for tag in ticker_meta.get("tags", [])}
+                if specific_tags and not ticker_tags.intersection(specific_tags):
+                    continue
+                if ticker_tags and not ticker_tags.intersection(tag_set):
+                    continue
             symbols.append(cleaned)
 
-    tag_set = {clean_text(tag).lower() for tag in item.tags}
+    ranked_tickers: list[tuple[int, int, str]] = []
     for ticker in _ticker_entries():
         symbol = clean_text(str(ticker.get("symbol", "")))
         if not symbol or symbol in symbols:
             continue
         ticker_tags = {clean_text(str(tag)).lower() for tag in ticker.get("tags", [])}
-        if ticker_tags.intersection(tag_set):
+        relevant_tags = ticker_tags.intersection(specific_tags or tag_set)
+        if not relevant_tags:
+            continue
+        overlap_score = 0
+        for tag in relevant_tags:
+            try:
+                overlap_score += len(IMPACT_TAG_PRIORITY) - IMPACT_TAG_PRIORITY.index(tag)
+            except ValueError:
+                overlap_score += 1
+        ranked_tickers.append((-overlap_score, len(symbols), symbol))
+
+    for _, _, symbol in sorted(ranked_tickers):
+        if symbol not in symbols:
             symbols.append(symbol)
         if len(symbols) >= limit:
             break
@@ -492,8 +648,40 @@ def _digest_theme(entries: list[DigestEntry]) -> str:
     merged = " ".join(entry.impacted_assets for entry in entries)
     has_a_shares = "A\u80a1" in merged or "\u4e2d\u56fd\u5e02\u573a" in merged
     has_tech = any(token in merged for token in ("\u56fd\u9645AI", "\u5168\u7403\u79d1\u6280", "\u534a\u5bfc\u4f53", "AI\u7b97\u529b"))
+    has_macro = any(
+        token in merged
+        for token in (
+            "\u5730\u7f18\u653f\u6cbb",
+            "\u539f\u6cb9",
+            "\u822a\u8fd0",
+            "\u80fd\u6e90",
+            "\u9ec4\u91d1",
+            "\u7f8e\u56fd\u653f\u6cbb",
+            "\u5b8f\u89c2",
+            "\u5168\u7403\u5e02\u573a",
+            "\u519b\u5de5",
+        )
+    )
+    has_space = any(token in merged for token in ("\u592a\u7a7a\u7ecf\u6d4e", "\u822a\u5929\u822a\u7a7a", "IPO"))
+    has_consumer = any(token in merged for token in ("\u70ed\u70b9\u6d88\u8d39", "\u6587\u65c5\u6d88\u8d39", "\u5a31\u4e50", "\u8d5b\u4e8b\u70ed\u70b9"))
+    if has_macro and has_tech and has_a_shares:
+        return "\u5b8f\u89c2 / \u79d1\u6280 / A\u80a1"
+    if has_macro and has_tech:
+        return "\u5b8f\u89c2 / \u79d1\u6280"
+    if has_macro and has_a_shares:
+        return "\u5b8f\u89c2 / A\u80a1"
+    if has_space and has_tech:
+        return "\u592a\u7a7a / \u79d1\u6280"
+    if has_consumer and has_a_shares:
+        return "\u6d88\u8d39 / A\u80a1"
     if has_a_shares and has_tech:
         return "\u79d1\u6280 / A\u80a1"
+    if has_macro:
+        return "\u5b8f\u89c2"
+    if has_space:
+        return "\u592a\u7a7a"
+    if has_consumer:
+        return "\u6d88\u8d39"
     if has_a_shares:
         return "A\u80a1"
     if has_tech:

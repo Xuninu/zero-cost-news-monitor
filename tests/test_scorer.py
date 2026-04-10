@@ -55,3 +55,55 @@ def test_rule_based_scorer_boosts_keywords_tickers_and_official_sources() -> Non
     assert result.is_urgent is True
     assert "NVDA" in result.matched_symbols
     assert "international-ai" in result.matched_tags
+
+
+def test_rule_based_scorer_handles_geopolitics_and_oil_shipping_signals() -> None:
+    scorer = RuleBasedScorer(
+        keyword_config={
+            "scoring": {
+                "urgent_threshold": 60,
+                "official_source_boost": 0,
+                "duplicate_penalty_per_match": 0,
+                "max_duplicate_penalty": 0,
+                "default_source_weight": 2,
+                "source_weights": {"rss": 4},
+                "source_name_weights": {"BBC World": 6},
+                "recency_boosts": [{"max_hours": 24, "boost": 8}],
+                "keyword_groups": [
+                    {
+                        "label": "Geopolitics oil shipping shock",
+                        "weight": 24,
+                        "tags": ["geopolitics", "oil", "shipping"],
+                        "terms": ["iran", "hormuz", "oil", "shipping"],
+                    }
+                ],
+                "urgency_keywords": [
+                    {"label": "Geopolitical shock", "boost": 20, "terms": ["attack", "missile"]},
+                ],
+            }
+        },
+        ticker_config={
+            "tickers": [
+                {"symbol": "XOM", "weight": 8, "aliases": ["oil"], "tags": ["energy"]},
+                {"symbol": "ZIM", "weight": 8, "aliases": ["shipping"], "tags": ["shipping"]},
+            ]
+        },
+    )
+    item = normalize_raw_item(
+        {
+            "source": "BBC World",
+            "source_type": "rss",
+            "title": "Iran threat around Hormuz sparks attack fears for oil shipping",
+            "body": "A missile attack risk could push oil and shipping shares higher.",
+            "url": "https://example.com/hormuz-oil-shipping",
+            "published_at": "2026-04-10T01:00:00Z",
+        }
+    )
+
+    result = scorer.score_item(item)
+
+    assert result.total_score >= 60
+    assert result.is_urgent is True
+    assert "XOM" in result.matched_symbols
+    assert "ZIM" in result.matched_symbols
+    assert "geopolitics" in result.matched_tags

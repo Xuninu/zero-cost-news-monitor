@@ -58,3 +58,45 @@ def test_render_digest_messages_follow_market_alert_layout() -> None:
     assert "\n\n2. " in message
     assert "Source:" not in message
     assert "EN:" not in message
+
+
+def test_build_digest_entries_suggests_macro_and_energy_candidates() -> None:
+    item = normalize_raw_item(
+        {
+            "source": "BBC World",
+            "source_type": "rss",
+            "title": "Hormuz shipping risk pushes crude oil higher",
+            "body": "Iran tensions raise tanker and shipping concerns across energy markets.",
+            "url": "https://example.com/hormuz-risk",
+            "published_at": "2026-04-10T04:00:00Z",
+            "tags": ["geopolitics", "oil", "shipping", "energy", "market-moving"],
+            "score": 88,
+        }
+    )
+
+    entry = build_digest_entries([item])[0]
+
+    assert entry.impact_label in {"利好", "利空", "中性"}
+    assert "相关股票" in entry.impact_assessment
+    assert any(symbol in entry.candidate_symbols for symbol in ["XOM", "CVX", "601857.SH", "ZIM"])
+    assert any(tag in entry.trigger_text for tag in ["地缘", "油运", "宏观", "中东"])
+
+
+def test_a_share_geopolitics_candidates_prefer_energy_shipping_over_generic_ai() -> None:
+    item = normalize_raw_item(
+        {
+            "source": "Eastmoney Company News",
+            "source_type": "eastmoney",
+            "title": "霍尔木兹海峡紧张局势升级 航运与原油价格波动",
+            "body": "中东局势扰动提升原油与海运板块关注度。",
+            "url": "https://example.com/hormuz-a-share",
+            "published_at": "2026-04-10T04:00:00Z",
+            "tags": ["a-shares", "company-news", "geopolitics", "oil", "shipping", "energy"],
+            "score": 78,
+        }
+    )
+
+    entry = build_digest_entries([item])[0]
+
+    assert any(symbol in entry.candidate_symbols for symbol in ["XOM", "CVX", "600028.SH", "601857.SH"])
+    assert "688256.SH" not in entry.candidate_symbols

@@ -23,6 +23,13 @@ scoring:
     Ars Technica Technology Lab: 4
     Eastmoney Market Commentary: 7
     Eastmoney Company News: 8
+    BBC World: 6
+    BBC Business: 6
+    Al Jazeera Global: 6
+    EIA Energy: 8
+    Google News Middle East Oil Shipping: 9
+    Google News Trump Markets: 9
+    Google News SpaceX IPO: 7
   recency_boosts:
     - max_hours: 1
       boost: 14
@@ -139,6 +146,129 @@ scoring:
         - 出口管制
         - 补贴
         - 牌照
+    - label: Geopolitics oil and shipping shock
+      weight: 24
+      tags: [geopolitics, oil, shipping, energy, commodities, market-moving]
+      terms:
+        - middle east
+        - iran
+        - israel
+        - red sea
+        - hormuz
+        - strait of hormuz
+        - crude
+        - oil
+        - opec
+        - tanker
+        - shipping
+        - missile
+        - drone
+        - airstrike
+        - ceasefire
+        - conflict
+        - gaza
+        - houthi
+        - 中东
+        - 伊朗
+        - 以色列
+        - 红海
+        - 霍尔木兹
+        - 原油
+        - 石油
+        - 油轮
+        - 航运
+        - 海运
+        - 导弹
+        - 无人机
+        - 空袭
+        - 停火
+        - 冲突
+    - label: Trump and macro market catalyst
+      weight: 22
+      tags: [us-politics, macro, global-markets, market-moving]
+      terms:
+        - trump
+        - tariff
+        - powell
+        - fed
+        - federal reserve
+        - white house
+        - treasury
+        - executive order
+        - sanction
+        - election
+        - stock market
+        - market selloff
+        - 特朗普
+        - 关税
+        - 鲍威尔
+        - 美联储
+        - 白宫
+        - 财政部
+        - 行政令
+        - 大选
+        - 股市
+        - 大盘
+        - 风险偏好
+    - label: Defense gold and safe haven
+      weight: 16
+      tags: [defense, gold, commodities, safe-haven]
+      terms:
+        - gold
+        - safe haven
+        - defense
+        - defence
+        - fighter jet
+        - navy
+        - missile defense
+        - military
+        - 黄金
+        - 避险
+        - 军工
+        - 战机
+        - 海军
+        - 国防
+        - 军事
+    - label: Space economy and IPO catalyst
+      weight: 18
+      tags: [space-economy, ipo, aerospace, global-technology]
+      terms:
+        - spacex
+        - starlink
+        - rocket
+        - satellite
+        - launch vehicle
+        - orbital
+        - reusable rocket
+        - 卫星
+        - 火箭
+        - 太空
+        - 航天
+        - 发射
+    - label: Consumer hotspot and event-driven trade
+      weight: 14
+      tags: [consumer-hotspot, tourism-consumption, entertainment, sports-hotspot, china-markets]
+      terms:
+        - championship
+        - champion
+        - finals
+        - concert
+        - box office
+        - tourism surge
+        - sold out
+        - theme park
+        - esports
+        - ip licensing
+        - 夺冠
+        - 冠军
+        - 赛事
+        - 演唱会
+        - 票房
+        - 旅游热
+        - 景区
+        - 文旅
+        - 电竞
+        - IP联名
   urgency_keywords:
     - label: Breaking or official confirmation
       boost: 22
@@ -178,3 +308,26 @@ scoring:
         - 监管
         - 处罚
         - 禁令
+    - label: Geopolitical or market shock
+      boost: 20
+      terms:
+        - strait of hormuz
+        - red sea
+        - attack
+        - missile
+        - airstrike
+        - tariff
+        - selloff
+        - plunge
+        - crash
+        - emergency
+        - 霍尔木兹
+        - 红海
+        - 袭击
+        - 导弹
+        - 空袭
+        - 关税
+        - 跳水
+        - 暴跌
+        - 大跌
+        - 紧急
