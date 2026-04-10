@@ -178,6 +178,7 @@ The business schedule is implemented in code with timezone-aware gating:
 - Every 2 hours at `15:00`, `17:00`, `19:00`, `21:00`, `23:00`, `01:00`, `03:00` in `Asia/Shanghai`
 
 This is important because GitHub Actions cron is UTC-only and does not natively support named time zones.
+The runtime gate also allows a small startup grace window so scheduled jobs still run if GitHub starts them a few minutes late.
 
 ## GitHub Actions Setup
 
