@@ -207,6 +207,7 @@ During a scheduled run, `pipeline.yml` now does both steps in one job:
 This avoids cache races between separate scheduled workflows that would otherwise restore and save different copies of the SQLite file.
 
 `digest.yml` is kept as a manual workflow for troubleshooting or on-demand sending.
+When you manually run `Pipeline` with `bootstrap=false`, it will also send the current pending digest for easier end-to-end verification.
 
 ### First GitHub bootstrap
 

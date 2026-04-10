@@ -70,7 +70,7 @@ jobs:
           fi
 
       - name: Send digest using the same SQLite state
-        if: ${{ github.event_name != 'workflow_dispatch' }}
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.bootstrap != 'true' }}
         shell: bash
         run: python -m jobs.send_digest --force
 
