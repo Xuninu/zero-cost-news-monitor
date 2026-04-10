@@ -113,6 +113,44 @@ GENERIC_IMPACT_TAGS = {
     "markets",
 }
 
+TECH_AI_TAGS = {
+    "international-ai",
+    "global-technology",
+    "frontier-models",
+    "model-release",
+    "semiconductors",
+    "ai-infrastructure",
+    "ai-chip",
+    "ai-application",
+    "consumer-tech",
+    "space-economy",
+    "aerospace",
+}
+
+MARKET_HOTSPOT_TAGS = {
+    "geopolitics",
+    "global-markets",
+    "market-moving",
+    "energy",
+    "oil",
+    "shipping",
+    "commodities",
+    "us-politics",
+    "macro",
+    "gold",
+    "safe-haven",
+    "defense",
+    "consumer-hotspot",
+    "tourism-consumption",
+    "entertainment",
+    "sports-hotspot",
+}
+
+A_SHARE_TAGS = {
+    "a-shares",
+    "china-markets",
+}
+
 EVENT_PATTERNS = (
     (
         "\u5730\u7f18\u51b2\u7a81\u4e0e\u6cb9\u8fd0\u6270\u52a8",
@@ -388,6 +426,42 @@ class DigestEntry:
     summary_zh: str
     score: float
     link: str
+
+
+def select_digest_items(items: Iterable[NewsItem], limit: int) -> list[NewsItem]:
+    """Select digest items with balanced coverage across key market themes."""
+    ranked_items = sorted(items, key=_digest_item_sort_key, reverse=True)
+    if limit <= 0 or not ranked_items:
+        return []
+
+    selected: list[NewsItem] = []
+    selected_ids: set[str] = set()
+
+    bucket_plan = (
+        ("tech_ai", _bucket_target_count("tech_ai", ranked_items, limit)),
+        ("market_hotspot", _bucket_target_count("market_hotspot", ranked_items, limit)),
+        ("a_shares", _bucket_target_count("a_shares", ranked_items, limit)),
+    )
+
+    for bucket_name, target_count in bucket_plan:
+        for item in ranked_items:
+            if len(selected) >= limit or target_count <= 0:
+                break
+            if item.id in selected_ids or not _item_matches_bucket(item, bucket_name):
+                continue
+            selected.append(item)
+            selected_ids.add(item.id)
+            target_count -= 1
+
+    for item in ranked_items:
+        if len(selected) >= limit:
+            break
+        if item.id in selected_ids:
+            continue
+        selected.append(item)
+        selected_ids.add(item.id)
+
+    return sorted(selected, key=_digest_item_sort_key, reverse=True)
 
 
 def build_digest_entries(items: Iterable[NewsItem]) -> list[DigestEntry]:
@@ -691,3 +765,35 @@ def _digest_theme(entries: list[DigestEntry]) -> str:
 
 def _contains_cjk(value: str) -> bool:
     return any("\u4e00" <= char <= "\u9fff" for char in value)
+
+
+def _bucket_target_count(bucket_name: str, items: list[NewsItem], limit: int) -> int:
+    available = sum(1 for item in items if _item_matches_bucket(item, bucket_name))
+    if available <= 0:
+        return 0
+
+    if bucket_name == "tech_ai":
+        target = 3 if limit >= 9 else 2 if limit >= 4 else 1
+    elif bucket_name == "market_hotspot":
+        target = 3 if limit >= 10 else 2 if limit >= 5 else 1
+    elif bucket_name == "a_shares":
+        target = 1 if limit >= 8 else 0
+    else:
+        target = 0
+    return min(target, available, limit)
+
+
+def _item_matches_bucket(item: NewsItem, bucket_name: str) -> bool:
+    tag_set = {clean_text(tag).lower() for tag in item.tags}
+    if bucket_name == "tech_ai":
+        return bool(tag_set.intersection(TECH_AI_TAGS))
+    if bucket_name == "market_hotspot":
+        return bool(tag_set.intersection(MARKET_HOTSPOT_TAGS))
+    if bucket_name == "a_shares":
+        return bool(tag_set.intersection(A_SHARE_TAGS))
+    return False
+
+
+def _digest_item_sort_key(item: NewsItem) -> tuple[int, float, datetime]:
+    reference = item.published_at or item.fetched_at
+    return (1 if item.is_urgent else 0, item.score, reference)

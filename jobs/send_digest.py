@@ -6,7 +6,7 @@ import argparse
 from datetime import UTC, datetime
 
 from config.settings import get_settings, setup_logging
-from digest.builder import build_digest_entries, render_digest_messages
+from digest.builder import build_digest_entries, render_digest_messages, select_digest_items
 from jobs.schedule_utils import is_scheduled_run_due
 from notify.wecom import WeComNotifier
 from storage.db import Database
@@ -29,10 +29,12 @@ def send_digest(force: bool = False, scheduled: bool = False) -> dict[str, objec
         return stats
 
     try:
-        items = db.fetch_pending_digest_items(
-            limit=settings.max_digest_items,
+        candidate_limit = max(settings.max_digest_items * 4, settings.max_digest_items + 20)
+        candidate_items = db.fetch_pending_digest_items(
+            limit=candidate_limit,
             min_score=settings.digest_min_score,
         )
+        items = select_digest_items(candidate_items, limit=settings.max_digest_items)
         if not items:
             stats = {"sent_messages": 0, "sent_items": 0, "skipped": True, "reason": "no_pending_items"}
             return stats

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from digest.builder import build_digest_entries, render_digest_messages
+from digest.builder import build_digest_entries, render_digest_messages, select_digest_items
 from normalize.schema import normalize_raw_item
 
 
@@ -100,3 +100,55 @@ def test_a_share_geopolitics_candidates_prefer_energy_shipping_over_generic_ai()
 
     assert any(symbol in entry.candidate_symbols for symbol in ["XOM", "CVX", "600028.SH", "601857.SH"])
     assert "688256.SH" not in entry.candidate_symbols
+
+
+def test_select_digest_items_keeps_tech_ai_coverage_when_macro_scores_higher() -> None:
+    items = [
+        normalize_raw_item(
+            {
+                "source": "BBC World",
+                "source_type": "rss",
+                "title": f"Middle East shipping shock {index}",
+                "body": "Oil and tanker risk keeps rising across global markets.",
+                "url": f"https://example.com/macro-{index}",
+                "published_at": f"2026-04-10T0{index}:00:00Z",
+                "tags": ["geopolitics", "oil", "shipping", "market-moving"],
+                "score": 92 - index,
+            }
+        )
+        for index in range(1, 6)
+    ]
+    items.extend(
+        [
+            normalize_raw_item(
+                {
+                    "source": "OpenAI News",
+                    "source_type": "rss",
+                    "title": "OpenAI releases new agent workflow update",
+                    "body": "The new agent stack improves enterprise reasoning deployment.",
+                    "url": "https://example.com/ai-1",
+                    "published_at": "2026-04-10T07:00:00Z",
+                    "tags": ["international-ai", "frontier-models", "official"],
+                    "score": 74,
+                }
+            ),
+            normalize_raw_item(
+                {
+                    "source": "Google AI Blog",
+                    "source_type": "rss",
+                    "title": "Google expands Gemini infrastructure",
+                    "body": "New inference infrastructure improves scale and deployment efficiency.",
+                    "url": "https://example.com/ai-2",
+                    "published_at": "2026-04-10T08:00:00Z",
+                    "tags": ["international-ai", "ai-infrastructure", "official"],
+                    "score": 72,
+                }
+            ),
+        ]
+    )
+
+    selected = select_digest_items(items, limit=5)
+
+    assert len(selected) == 5
+    assert sum("international-ai" in item.tags or "ai-infrastructure" in item.tags for item in selected) >= 2
+    assert sum("geopolitics" in item.tags or "market-moving" in item.tags for item in selected) >= 2
