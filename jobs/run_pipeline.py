@@ -1,4 +1,4 @@
-﻿"""Collect, normalize, score, store, and optionally alert on new items."""
+"""Collect, normalize, score, store, and optionally alert on new items."""
 
 from __future__ import annotations
 
@@ -146,13 +146,15 @@ def run_pipeline(
         return stats
 
     try:
+        settings = get_settings()
         sources_config = load_yaml_config("sources.yaml")
         source_filter = {name.strip().lower() for name in only_sources or [] if name.strip()}
         raw_items, collector_counts, collector_errors = collect_raw_items(
             sources_config=sources_config,
             only_sources=source_filter or None,
         )
-        processing_stats = process_raw_items(raw_items, db=db, send_urgent=not bootstrap)
+        send_urgent = settings.send_urgent_alerts and not bootstrap
+        processing_stats = process_raw_items(raw_items, db=db, send_urgent=send_urgent)
         bootstrap_marked_sent = 0
         if bootstrap:
             pending_items = db.fetch_pending_digest_items(limit=10_000, min_score=0.0)
@@ -163,6 +165,7 @@ def run_pipeline(
             "scheduled": scheduled,
             "forced": force,
             "bootstrap": bootstrap,
+            "send_urgent_alerts": send_urgent,
             "collector_counts": collector_counts,
             "collector_errors": collector_errors,
             "bootstrap_marked_sent": bootstrap_marked_sent,

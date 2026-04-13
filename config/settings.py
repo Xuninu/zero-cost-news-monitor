@@ -38,6 +38,7 @@ class Settings:
     request_timeout_seconds: int
     wecom_webhook_url: str
     wecom_message_format: str
+    send_urgent_alerts: bool
     urgent_threshold: float
     digest_min_score: float
     delivery_max_age_hours: float
@@ -59,6 +60,7 @@ class Settings:
             request_timeout_seconds=int(os.getenv("REQUEST_TIMEOUT_SECONDS", "20")),
             wecom_webhook_url=os.getenv("WECOM_WEBHOOK_URL", ""),
             wecom_message_format=os.getenv("WECOM_MESSAGE_FORMAT", "text").lower(),
+            send_urgent_alerts=_env_bool("SEND_URGENT_ALERTS", default=True),
             urgent_threshold=float(os.getenv("URGENT_THRESHOLD", "80")),
             digest_min_score=float(os.getenv("DIGEST_MIN_SCORE", "36")),
             delivery_max_age_hours=float(os.getenv("DELIVERY_MAX_AGE_HOURS", "5")),
@@ -70,6 +72,14 @@ class Settings:
             youtube_webhook_secret=os.getenv("YOUTUBE_WEBHOOK_SECRET", ""),
             youtube_webhook_callback_url=os.getenv("YOUTUBE_WEBHOOK_CALLBACK_URL", ""),
         )
+
+
+def _env_bool(name: str, default: bool) -> bool:
+    """Parse a boolean environment variable using common truthy values."""
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 @lru_cache(maxsize=1)
