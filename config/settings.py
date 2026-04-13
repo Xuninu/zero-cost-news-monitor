@@ -40,8 +40,10 @@ class Settings:
     wecom_message_format: str
     urgent_threshold: float
     digest_min_score: float
+    delivery_max_age_hours: float
     title_similarity_threshold: float
     pipeline_schedule_timezone: str
+    pipeline_schedule_grace_minutes: int
     max_digest_items: int
     youtube_verify_token: str
     youtube_webhook_secret: str
@@ -59,9 +61,11 @@ class Settings:
             wecom_message_format=os.getenv("WECOM_MESSAGE_FORMAT", "text").lower(),
             urgent_threshold=float(os.getenv("URGENT_THRESHOLD", "80")),
             digest_min_score=float(os.getenv("DIGEST_MIN_SCORE", "36")),
+            delivery_max_age_hours=float(os.getenv("DELIVERY_MAX_AGE_HOURS", "5")),
             title_similarity_threshold=float(os.getenv("TITLE_SIMILARITY_THRESHOLD", "0.92")),
             pipeline_schedule_timezone=os.getenv("PIPELINE_SCHEDULE_TIMEZONE", "Asia/Shanghai"),
-            max_digest_items=int(os.getenv("MAX_DIGEST_ITEMS", "25")),
+            pipeline_schedule_grace_minutes=int(os.getenv("PIPELINE_SCHEDULE_GRACE_MINUTES", "30")),
+            max_digest_items=int(os.getenv("MAX_DIGEST_ITEMS", "8")),
             youtube_verify_token=os.getenv("YOUTUBE_VERIFY_TOKEN", ""),
             youtube_webhook_secret=os.getenv("YOUTUBE_WEBHOOK_SECRET", ""),
             youtube_webhook_callback_url=os.getenv("YOUTUBE_WEBHOOK_CALLBACK_URL", ""),

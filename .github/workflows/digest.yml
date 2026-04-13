@@ -21,7 +21,8 @@ jobs:
       URGENT_THRESHOLD: 80
       TITLE_SIMILARITY_THRESHOLD: 0.92
       PIPELINE_SCHEDULE_TIMEZONE: Asia/Shanghai
-      MAX_DIGEST_ITEMS: 25
+      PIPELINE_SCHEDULE_GRACE_MINUTES: 30
+      MAX_DIGEST_ITEMS: 8
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

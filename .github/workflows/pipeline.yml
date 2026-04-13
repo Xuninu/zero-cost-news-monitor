@@ -26,10 +26,11 @@ jobs:
       REQUEST_TIMEOUT_SECONDS: 20
       WECOM_WEBHOOK_URL: ${{ secrets.WECOM_WEBHOOK_URL }}
       WECOM_MESSAGE_FORMAT: text
-      URGENT_THRESHOLD: 80
+      URGENT_THRESHOLD: 9999
       TITLE_SIMILARITY_THRESHOLD: 0.92
       PIPELINE_SCHEDULE_TIMEZONE: Asia/Shanghai
-      MAX_DIGEST_ITEMS: 25
+      PIPELINE_SCHEDULE_GRACE_MINUTES: 30
+      MAX_DIGEST_ITEMS: 8
       YOUTUBE_VERIFY_TOKEN: ${{ secrets.YOUTUBE_VERIFY_TOKEN }}
       YOUTUBE_WEBHOOK_SECRET: ${{ secrets.YOUTUBE_WEBHOOK_SECRET }}
       YOUTUBE_WEBHOOK_CALLBACK_URL: ${{ secrets.YOUTUBE_WEBHOOK_CALLBACK_URL }}
@@ -58,19 +59,38 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .[dev]
 
-      - name: Run pipeline with schedule gating
+      - name: Check Beijing delivery window
+        id: schedule
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.bootstrap }}" == "true" ]]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "should_send_digest=false" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "should_send_digest=true" >> "$GITHUB_OUTPUT"
+          else
+            python - <<'PY' >> "$GITHUB_OUTPUT"
+          from jobs.schedule_utils import is_scheduled_run_due
+
+          due = is_scheduled_run_due()
+          print(f"should_run={'true' if due else 'false'}")
+          print(f"should_send_digest={'true' if due else 'false'}")
+          PY
+          fi
+
+      - name: Run pipeline in approved window
+        if: ${{ steps.schedule.outputs.should_run == 'true' }}
         shell: bash
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.bootstrap }}" == "true" ]]; then
             python -m jobs.run_pipeline --force --bootstrap
-          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            python -m jobs.run_pipeline --force
           else
-            python -m jobs.run_pipeline --scheduled
+            python -m jobs.run_pipeline --force
           fi
 
       - name: Send digest using the same SQLite state
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.bootstrap != 'true' }}
+        if: ${{ steps.schedule.outputs.should_send_digest == 'true' }}
         shell: bash
         run: python -m jobs.send_digest --force
 
